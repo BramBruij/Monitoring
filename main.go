@@ -16,6 +16,7 @@ func pingHost(hostname string, ch chan<- string) {
 
 	pinger.Count = 3 // Aantal ping-pakketten verzonden
 	pinger.Timeout = time.Second * 2
+	pinger.Interval = time.Second * 5 // Vergroot de intervaltijd naar 5 seconden
 
 	pinger.OnRecv = func(pkt *ping.Packet) {
 		ch <- fmt.Sprintf("%s is online", hostname)
@@ -32,7 +33,7 @@ func pingHost(hostname string, ch chan<- string) {
 }
 
 func main() {
-	hostnames := []string{"https://www.fontys.nl/Over-Fontys/Fontys-ICT.htm", "google.com", "nonexistent-host.com"}
+	hostnames := []string{"www.fontys.nl", "google.com", "nonexistent-host.com"}
 
 	resultChannel := make(chan string)
 
